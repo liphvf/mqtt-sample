@@ -1,0 +1,14 @@
+{
+  "name": "mqtt-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mqtt.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^2.17.0"
+  }
+}
