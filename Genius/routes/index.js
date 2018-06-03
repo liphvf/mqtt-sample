@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 router.post('/enviar/', function(req, res, next) {
   
   console.log(req.body.resposta);
-  // client.publish('resposta', req.query.resposta);
+  client.publish('resposta', req.query.resposta);
   
   // res.redirect('/');
   res.sendStatus(200);
