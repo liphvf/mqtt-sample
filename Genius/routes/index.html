@@ -14,6 +14,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.4/js/uikit-icons.min.js"></script>
   <!-- development version, includes helpful console warnings -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -45,38 +47,48 @@
           </div>
         </div>
       </div>
-      
+
     </div>
     <button class="uk-button uk-button-primary" style="margin-top: 18px;" @click="sendMqtt">Enviar</button>
   </div>
 
-    <script>
-      var app = new Vue({
-        el: '#app',
-        data: {
-          message: ''
-        },
-        methods:
-          {
-            sendMqtt: function () {
-              this.message += " : Enviado!";
-              window.location.href = "/enviar";
-            },
-            addColorRed: function ( ) {
-              this.message += "R";
-            },
-            addColorYellow: function ( ) {
-              this.message += "Y";
-            },
-            addColorGreen: function ( ) {
-              this.message += "G";
-            },
-            addColorWhite: function ( ) {
-              this.message += "W";
-            }
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: ''
+      },
+      methods:
+        {
+          sendMqtt: function () {
+
+            axios.post('/enviar', {
+              resposta: this.message,
+            })
+              .then(function (response) {
+                console.log("Menssagem Enviado Com Sucesso");
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+              this.message = "";
+
+          },
+          addColorRed: function () {
+            this.message += "R";
+          },
+          addColorYellow: function () {
+            this.message += "Y";
+          },
+          addColorGreen: function () {
+            this.message += "G";
+          },
+          addColorWhite: function () {
+            this.message += "W";
           }
-      })
-    </script>
+        }
+    })
+  </script>
 </body>
 
 </html>
