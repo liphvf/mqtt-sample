@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.4/css/uikit.min.css" />
+
+  <!-- UIkit JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.4/js/uikit.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.4/js/uikit-icons.min.js"></script>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app" class="uk-container">
+    {{message}}
+
+    <div>
+
+      <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="background-color: red; cursor: pointer;" @click="addColorRed">
+            <h3 class="uk-card-title">Vermelho</h3>
+          </div>
+        </div>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="background-color: yellow; cursor: pointer;" @click="addColorYellow">
+            <h3 class="uk-card-title">Amarelo</h3>
+          </div>
+        </div>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="background-color: green; cursor: pointer;" @click="addColorGreen">
+            <h3 class="uk-card-title">Verde</h3>
+          </div>
+        </div>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="addColorWhite">
+            <h3 class="uk-card-title">Branco</h3>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <button class="uk-button uk-button-primary" style="margin-top: 18px;" @click="sendMqtt">Enviar</button>
+  </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: ''
+        },
+        methods:
+          {
+            sendMqtt: function () {
+              this.message += " : Enviado!";
+              window.location.href = "/enviar";
+            },
+            addColorRed: function ( ) {
+              this.message += "R";
+            },
+            addColorYellow: function ( ) {
+              this.message += "Y";
+            },
+            addColorGreen: function ( ) {
+              this.message += "G";
+            },
+            addColorWhite: function ( ) {
+              this.message += "W";
+            }
+          }
+      })
+    </script>
+</body>
+
+</html>
