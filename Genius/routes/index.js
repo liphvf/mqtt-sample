@@ -3,11 +3,11 @@ var router = express.Router();
 var path = require('path');
 var mqtt = require('mqtt')
 
-var client = mqtt.connect('mqtt://hkxmleqo:8jrTUwSKMNJz@m10.cloudmqtt.com:13044')
+var client = mqtt.connect('mqtt://gncjecus:EU56oW3t6R4r@m14.cloudmqtt.com:16941');
 
 client.on('connect', function () {
   console.log("conectado: ", client.connected);
-  client.subscribe('test')
+  client.subscribe('node')
   // Caso queira enviar uma menssagem para exemplificar.
   // client.publish('presence', 'Hello mqtt')
 })
@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 router.post('/enviar/', function(req, res, next) {
   
   console.log(req.body.resposta);
-  client.publish('resposta', req.query.resposta);
+  client.publish('node', req.body.resposta);
   
   // res.redirect('/');
   res.sendStatus(200);
