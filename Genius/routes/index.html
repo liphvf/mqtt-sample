@@ -24,7 +24,7 @@
     {{message}}
 
     <div>
-
+      <h1>Leds</h1>
       <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
           <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="background-color: red; cursor: pointer;" @click="addColorRed">
@@ -48,8 +48,28 @@
         </div>
       </div>
 
+
+      <hr class="uk-divider-icon">
+      <h1>Componentes</h1>
+      <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="addColorWhite">
+            <h3 class="uk-card-title">Rele</h3>
+          </div>
+        </div>
+      </div>
+
+      <hr class="uk-divider-icon">
+      <div class="uk-child-width-1-1@s uk-grid-match" uk-grid>
+        <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="addColorWhite">
+            <h3 class="uk-card-title">Todos</h3>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <button class="uk-button uk-button-primary" style="margin-top: 18px;" @click="sendMqtt">Enviar</button>
+    <!-- <button class="uk-button uk-button-primary" style="margin-top: 18px;" @click="sendMqtt">Enviar</button> -->
   </div>
 
   <script>
@@ -59,34 +79,63 @@
         message: ''
       },
       methods:
-        {
-          sendMqtt: function () {
+      {
+        sendMqtt: function (msg) {
 
-            axios.post('/enviar', {
-              resposta: this.message,
+          axios.post('/enviar', {
+            resposta: msg,
+          })
+            .then(function (response) {
+              console.log("Menssagem Enviado Com Sucesso");
             })
-              .then(function (response) {
-                console.log("Menssagem Enviado Com Sucesso");
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-              this.message = "";
+            .catch(function (error) {
+              console.log(error);
+            })
 
-          },
-          addColorRed: function () {
-            this.message += "R";
-          },
-          addColorYellow: function () {
-            this.message += "Y";
-          },
-          addColorGreen: function () {
-            this.message += "G";
-          },
-          addColorWhite: function () {
-            this.message += "W";
-          }
+        },
+        update: function (msg) {
+
+          axios.get('/update')
+            .then(function (response) {
+              console.log("Resposta: ",response);
+              this.message = response;
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+
+          axios.post('/update', {
+            resposta: msg,
+          })
+            .then(function (response) {
+              console.log("Menssagem Enviado Com Sucesso");
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+
+        },
+        addColorRed: function () {
+          this.sendMqtt("rled");
+        },
+        addColorYellow: function () {
+          this.sendMqtt("yled");
+
+        },
+        addColorGreen: function () {
+          this.sendMqtt("gled");
+
+        },
+        addColorWhite: function () {
+          this.sendMqtt("wled");
+        },
+        todos: function () {
+          this.sendMqtt("todos");
+        },
+        rele: function () {
+          this.sendMqtt("rele");
         }
+      }
     })
   </script>
 </body>

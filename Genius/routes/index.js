@@ -5,6 +5,8 @@ var mqtt = require('mqtt')
 
 var client = mqtt.connect('mqtt://gncjecus:EU56oW3t6R4r@m14.cloudmqtt.com:16941');
 
+ global.Msgs  = [];
+
 client.on('connect', function () {
   console.log("conectado: ", client.connected);
   client.subscribe('node')
@@ -14,7 +16,12 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
   // message is Buffer
-  console.log(message.toString())
+
+  console.log(message.toString(), topic.toString());
+  Msgs.push({
+    topic: topic.toString(),
+    msg: message.toString()
+  });
   // client.end()
 })
 
@@ -31,6 +38,13 @@ router.post('/enviar/', function(req, res, next) {
   
   // res.redirect('/');
   res.sendStatus(200);
+});
+
+router.post('/update', function(req, res, next) {
+  var menssagens = Msgs;
+  Msgs = [];
+  res.send(menssagens);
+
 });
 
 module.exports = router;
