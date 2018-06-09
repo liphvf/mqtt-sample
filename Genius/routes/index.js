@@ -40,10 +40,10 @@ router.post('/enviar/', function(req, res, next) {
   res.sendStatus(200);
 });
 
-router.post('/update', function(req, res, next) {
+router.get('/update', function(req, res, next) {
   var menssagens = Msgs;
   Msgs = [];
-  res.send(menssagens);
+  res.status(200).send(menssagens);
 
 });
 

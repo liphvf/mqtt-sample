@@ -81,12 +81,12 @@
       methods:
       {
         sendMqtt: function (msg) {
-
+          that = this;
           axios.post('/enviar', {
             resposta: msg,
-          })
-            .then(function (response) {
+          }).then(function (response) {
               console.log("Menssagem Enviado Com Sucesso");
+              that.update();
             })
             .catch(function (error) {
               console.log(error);
@@ -97,7 +97,7 @@
 
           axios.get('/update')
             .then(function (response) {
-              console.log("Resposta: ",response);
+              console.log("Resposta: ", response);
               this.message = response;
             })
             .catch(function (error) {
