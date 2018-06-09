@@ -16,6 +16,8 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 </head>
 
 <body>
@@ -53,7 +55,7 @@
       <h1>Componentes</h1>
       <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
-          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="addColorWhite">
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="rele">
             <h3 class="uk-card-title">Rele</h3>
           </div>
         </div>
@@ -62,7 +64,7 @@
       <hr class="uk-divider-icon">
       <div class="uk-child-width-1-1@s uk-grid-match" uk-grid>
         <div>
-          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="addColorWhite">
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="cursor: pointer;" @click="todos">
             <h3 class="uk-card-title">Todos</h3>
           </div>
         </div>
@@ -93,28 +95,17 @@
             })
 
         },
-        update: function (msg) {
-
+        update: _.debounce( function (msg) {
+          that = this;
           axios.get('/update')
             .then(function (response) {
               console.log("Resposta: ", response);
-              this.message = response;
+              that.message = response.data;
             })
             .catch(function (error) {
               console.log(error);
             })
-
-          axios.post('/update', {
-            resposta: msg,
-          })
-            .then(function (response) {
-              console.log("Menssagem Enviado Com Sucesso");
-            })
-            .catch(function (error) {
-              console.log(error);
-            })
-
-        },
+        }, 1000),
         addColorRed: function () {
           this.sendMqtt("rled");
         },
