@@ -9,7 +9,8 @@ var client = mqtt.connect('mqtt://gncjecus:EU56oW3t6R4r@m14.cloudmqtt.com:16941'
 
 client.on('connect', function () {
   console.log("conectado: ", client.connected);
-  client.subscribe('node')
+  client.subscribe('nodeS')
+  client.subscribe('nodep')
   // Caso queira enviar uma menssagem para exemplificar.
   // client.publish('presence', 'Hello mqtt')
 })

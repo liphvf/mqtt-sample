@@ -23,7 +23,7 @@
 <body>
 
   <div id="app" class="uk-container">
-    {{message}}
+    <!-- {{message}} -->
 
     <div>
       <h1>Leds</h1>
@@ -82,25 +82,28 @@
       },
       methods:
       {
-        sendMqtt: function (msg) {
+        sendMqtt: _.debounce(function (msg) {
           that = this;
           axios.post('/enviar', {
             resposta: msg,
           }).then(function (response) {
-              console.log("Menssagem Enviado Com Sucesso");
-              that.update();
-            })
+            console.log("Menssagem Enviado Com Sucesso");
+            that.update();
+          })
             .catch(function (error) {
               console.log(error);
             })
 
-        },
-        update: _.debounce( function (msg) {
+        }, 500),
+        update: _.debounce(function (msg) {
           that = this;
           axios.get('/update')
             .then(function (response) {
               console.log("Resposta: ", response);
-              that.message = response.data;
+              // that.message = response.data;
+              response.data.forEach(element => {
+                UIkit.notification(element.msg);
+              });
             })
             .catch(function (error) {
               console.log(error);
@@ -128,6 +131,8 @@
         }
       }
     })
+
+    setInterval(app.update, 5000);
   </script>
 </body>
 
